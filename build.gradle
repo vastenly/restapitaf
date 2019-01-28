@@ -1,0 +1,87 @@
+group 'com.vastenly'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    //Do build script here
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath "ru.d10xa:gradle-allure-plugin:0.5.5"
+    }
+}
+
+apply plugin: 'ru.d10xa.allure'
+allure {
+    aspectjweaver = true
+    junit = false
+    testNG = true
+    spock = false
+    geb = false
+    allureResultsDir = "$buildDir/allure-results"
+    allureReportDir = "$buildDir/allure-report"
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    baseLogin = ''
+    basePassword = ''
+    baseUrl = 'https://petstore.swagger.io/v2'
+    drivers = ['chrome', 'internetExplorer']
+    suiteName = 'orderTestSuite'
+
+}
+
+apply plugin: 'java'
+sourceCompatibility = 1.8
+
+dependencies {
+    compile 'org.testng:testng:6.10'
+    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
+    compile 'ru.yandex.qatools.allure:allure-bundle:+'
+    compile 'ru.yandex.qatools.allure:allure-java-annotations:+'
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    compile 'com.codeborne:selenide:4.11.4'
+    compile group: 'org.sql2o', name: 'sql2o', version: '1.5.4'
+    compile group: 'javax.mail', name: 'mail', version: '1.4'
+    compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1212'
+    compile 'org.projectlombok:lombok:1.18.4'
+    compile 'org.springframework.boot:spring-boot:2.1.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-autoconfigure:2.1.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter:2.1.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-aop:2.1.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc:2.1.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-log4j2:2.1.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-test:2.1.2.RELEASE'
+    compile 'org.springframework:spring-context:5.1.4.RELEASE'
+    compile 'org.springframework:spring-beans:5.1.4.RELEASE'
+    compile 'org.springframework:spring-core:5.1.4.RELEASE'
+    compile 'org.springframework:spring-context:5.1.4.RELEASE'
+    compile 'org.springframework:spring-expression:5.1.4.RELEASE'
+    compile 'org.springframework:spring-test:5.1.4.RELEASE'
+    compile 'org.springframework:spring-jdbc:5.1.4.RELEASE'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8'
+    testCompile "ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4"
+}
+
+task chromeLocalTest(type: Test) {
+    def suite = "suites/$suiteName" + ".xml"
+    useTestNG() {
+        suites suite
+    }
+    scanForTestClasses = false
+    ignoreFailures = true
+    include '**/*'
+    systemProperty 'selenide.browser', 'chrome'
+    systemProperty 'selenide.screenshots', 'false'
+    systemProperty 'selenide.timeout', '40000'
+    systemProperty 'selenide.collectionsTimeout', '40000'
+    systemProperty 'baseUrl', baseUrl
+    systemProperty 'baseLogin', baseLogin
+    systemProperty 'basePassword', basePassword
+}
