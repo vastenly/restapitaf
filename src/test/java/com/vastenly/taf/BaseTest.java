@@ -15,7 +15,6 @@ import org.testng.annotations.Listeners;
 public class BaseTest {
 
     private final Logger log = LoggerFactory.getLogger(BaseTest.class);
-    protected JSONObject responseBody;
 
     @BeforeSuite
     public void before() {

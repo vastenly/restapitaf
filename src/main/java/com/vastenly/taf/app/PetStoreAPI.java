@@ -1,10 +1,10 @@
 package com.vastenly.taf.app;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.vastenly.taf.util.http.RestClient;
-import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class PetStoreAPI {
 
@@ -14,7 +14,7 @@ public class PetStoreAPI {
         RestClient.sendGetRequest(host);
     }
 
-    public static JSONObject createOrder(String pathName, Order order) throws UnirestException, JsonProcessingException {
+    public static Order createOrder(String pathName, Order order) throws UnirestException, IOException {
         pathName = "https://petstore.swagger.io/v2" + pathName;
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(order);

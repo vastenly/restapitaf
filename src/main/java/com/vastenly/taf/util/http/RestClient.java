@@ -1,19 +1,20 @@
 package com.vastenly.taf.util.http;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONObject;
+import com.vastenly.taf.app.Order;
+
+import java.io.IOException;
 
 import static org.testng.Assert.assertEquals;
 
-//import static org.junit.Assert.assertEquals;
-
 public class RestClient {
 
-    public static JSONObject sendPostRequest(String URL, String api_key, String body, int expectedStatus) throws
-            UnirestException {
+    public static Order sendPostRequest(String URL, String api_key, String body, int expectedStatus) throws
+            UnirestException, IOException {
 
         HttpResponse<JsonNode> response = Unirest.post(URL)
                 .header("api_key", api_key)
@@ -21,7 +22,8 @@ public class RestClient {
                 .body(body)
                 .asJson();
         assertEquals(response.getStatus(), expectedStatus);
-        return response.getBody().getObject();
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(response.getBody().getObject().toString(), Order.class);
     }
 
     public static void sendGetRequest(String URL) throws UnirestException {
