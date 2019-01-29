@@ -3,7 +3,6 @@ package com.vastenly.taf.app;
 import com.vastenly.taf.app.enums.OrderStatus;
 import lombok.Data;
 
-import static com.vastenly.taf.app.enums.OrderStatus.PLACED;
 
 @Data
 public class Order {

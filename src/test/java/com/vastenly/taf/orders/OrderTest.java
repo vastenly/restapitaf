@@ -5,7 +5,7 @@ import com.vastenly.taf.BaseTest;
 import com.vastenly.taf.app.Order;
 import com.vastenly.taf.app.enums.OrderStatus;
 import com.vastenly.taf.util.StringUtils;
-import com.vastenly.taf.util.http.PetStoreAPI;
+import com.vastenly.taf.app.PetStoreAPI;
 
 import static org.testng.Assert.*;
 

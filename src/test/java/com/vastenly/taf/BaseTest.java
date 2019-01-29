@@ -3,7 +3,7 @@ package com.vastenly.taf;
 import com.vastenly.taf.system.AnnotationTransformer;
 import com.vastenly.taf.system.TestRetry;
 import com.vastenly.taf.system.WebDriverListener;
-import com.vastenly.taf.util.http.PetStoreAPI;
+import com.vastenly.taf.app.PetStoreAPI;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class BaseTest {
         }
     }
 
-    @AfterMethod(groups = "time-setting", alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void afterMethod() {
 
     }
