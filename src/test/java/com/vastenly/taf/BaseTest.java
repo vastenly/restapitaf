@@ -4,6 +4,9 @@ import com.vastenly.taf.system.AnnotationTransformer;
 import com.vastenly.taf.system.TestRetry;
 import com.vastenly.taf.system.WebDriverListener;
 import com.vastenly.taf.util.http.PetStoreAPI;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
@@ -11,14 +14,17 @@ import org.testng.annotations.Listeners;
 @Listeners({WebDriverListener.class, TestRetry.class, AnnotationTransformer.class})
 public class BaseTest {
 
+    private final Logger log = LoggerFactory.getLogger(BaseTest.class);
+    protected JSONObject responseBody;
+
     @BeforeSuite
     public void before() {
-        System.out.println("checkAccessToTheHost");
+        log.info("checkAccessToTheHost");
         try {
             PetStoreAPI.checkAccessToTheHost();
         } catch (Exception e) {
-            System.out.println("Failed to checkAccessToTheHost");
-            System.out.println(e.getMessage());
+            log.info("Failed to checkAccessToTheHost");
+            log.info(e.getMessage());
         }
     }
 
