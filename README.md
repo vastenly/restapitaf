@@ -8,6 +8,6 @@ Local tests run: use testNG runner
 
 
 
-View allure results:
+View allure results (for macOS use FireFox browser):
     
-    restapitaf/build/allure-report
+    restapitaf/build/allure-report/index.html
