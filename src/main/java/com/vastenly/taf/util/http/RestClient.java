@@ -26,6 +26,17 @@ public class RestClient {
         return objectMapper.readValue(response.getBody().getObject().toString(), Order.class);
     }
 
+    public static void sendPostRequestWithFail(String URL, String api_key, String body, int expectedStatus) throws
+            UnirestException {
+
+        HttpResponse<JsonNode> response = Unirest.post(URL)
+                .header("api_key", api_key)
+                .header("Content-type", "application/json")
+                .body(body)
+                .asJson();
+        assertEquals(response.getStatus(), expectedStatus);
+    }
+
     public static void sendGetRequest(String URL) throws UnirestException {
         HttpResponse<String> response = Unirest.get(URL)
                 .header("accept", "application/json")
