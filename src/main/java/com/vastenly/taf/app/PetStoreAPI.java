@@ -39,6 +39,22 @@ public class PetStoreAPI {
         return order;
     }
 
+    public static Order createOrderWithNoFields_NON_NULL(Order order, int expectedStatus) throws UnirestException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        String jsonString = objectMapper.writeValueAsString(order);
+        order = getResponse(jsonString, expectedStatus);
+        return order;
+    }
+
+    public static Order createOrderWithNoFields_NON_DEFAULT(Order order, int expectedStatus) throws UnirestException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
+        String jsonString = objectMapper.writeValueAsString(order);
+        order = getResponse(jsonString, expectedStatus);
+        return order;
+    }
+
     public static Order createOrderWithNoFields(Order order, int expectedStatus) throws UnirestException, IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
