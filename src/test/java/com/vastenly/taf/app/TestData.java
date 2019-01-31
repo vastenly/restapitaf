@@ -34,6 +34,7 @@ public class TestData {
     public static Order getOrder_Quantity_DefaultValue() {
         Order order = getOrderWithValidData();
         order.setQuantity(0);
+        order.setComplete(true);
         return order;
     }
 

@@ -21,7 +21,9 @@ public class PetStoreAPI {
     private static String host = "http://petstore.swagger.io";
 
     public static void checkAccessToTheHost() throws UnirestException {
-        RestClient.sendGetRequest(host);
+        HttpResponse<String> response = RestClient.sendGetRequest(host);
+        assertEquals(response.getStatus(), 200);
+        log.info("checkAccessToTheHost: " + response);
     }
 
     public static String createOrder(int expectedStatus) throws UnirestException {
@@ -57,8 +59,8 @@ public class PetStoreAPI {
 
     public static Order createOrderWithNoFields(Order order, int expectedStatus) throws UnirestException, IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL.NON_DEFAULT);
+        //objectMapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
         String jsonString = objectMapper.writeValueAsString(order);
         order = getResponse(jsonString, expectedStatus);
         return order;
