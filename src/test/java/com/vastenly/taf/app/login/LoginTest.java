@@ -1,4 +1,4 @@
-package com.vastenly.taf.login;
+package com.vastenly.taf.app.login;
 
 import com.vastenly.taf.BaseTest;
 import ru.yandex.qatools.allure.annotations.Description;

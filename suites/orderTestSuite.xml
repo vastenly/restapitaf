@@ -3,7 +3,7 @@
 <suite name="Login" verbose="1" parallel="methods" thread-count="1">
     <test name="Test">
         <classes>
-            <class name="com.vastenly.taf.orders.OrderTest"/>
+            <class name="com.vastenly.taf.app.orders.OrderTest"/>
         </classes>
     </test>
 </suite>

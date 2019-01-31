@@ -1,6 +1,5 @@
 package com.vastenly.taf.app;
 
-import com.vastenly.taf.app.enums.OrderStatus;
 import com.vastenly.taf.util.StringUtils;
 import lombok.Data;
 
@@ -9,22 +8,6 @@ import static org.testng.Assert.assertEquals;
 
 @Data
 public class Order {
-
-    public static class OrderNoId {
-        public Long petId = Long.valueOf(7777 + (int) (Math.random() * 1000));
-        public int quantity = 1 + (int) (Math.random() * 10);
-        public String shipDate = "2019-10-26T17:06:56.745Z";
-        public String status = OrderStatus.PLACED.status();
-        public boolean complete = false;
-    }
-
-    public static class OrderNoComplete {
-        public Long id = Long.valueOf(777 + (int) (Math.random() * 1000));
-        public Long petId = Long.valueOf(7777 + (int) (Math.random() * 1000));
-        public int quantity = 1 + (int) (Math.random() * 10);
-        public String shipDate = "2019-10-26T17:06:56.745Z";
-        public String status = OrderStatus.PLACED.status();
-    }
 
     public Order() {
     }
@@ -36,7 +19,6 @@ public class Order {
     public String status;
     public boolean complete;
 
-
     public Order(Long id, Long petId, int quantity, String shipDate, String status, boolean complete) {
         this.id = id;
         this.petId = petId;
@@ -44,15 +26,6 @@ public class Order {
         this.shipDate = shipDate;
         this.status = status;
         this.complete = complete;
-    }
-
-    public Order(boolean withExampleData) {
-        this.id = Long.valueOf(777 + (int) (Math.random() * 1000));
-        this.petId = Long.valueOf(7777 + (int) (Math.random() * 1000));
-        this.quantity = 1 + (int) (Math.random() * 10);
-        this.shipDate = "2019-10-26T17:06:56.745Z";
-        this.status = OrderStatus.PLACED.status();
-        this.complete = false;
     }
 
     @Override
@@ -76,4 +49,51 @@ public class Order {
         }
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setPetId(Long petId) {
+        this.petId = petId;
+    }
+
+    public Long getPetId() {
+        return petId;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setShipDate(String shipDate) {
+        this.shipDate = shipDate;
+    }
+
+    public String getShipDate() {
+        return shipDate;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
+    }
+
+    public boolean getComplete() {
+        return complete;
+    }
 }
