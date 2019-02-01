@@ -24,6 +24,7 @@ public class PetStoreAPI {
 
     public static String createOrder(String jsonString, int expectedStatus) throws UnirestException {
         String pathName = host + "/v2" + "/store/order";
+        log("jsonString " + jsonString);
         HttpResponse<JsonNode> response = RestClient.sendPostRequest(pathName, "vastenly", jsonString);
         assertEquals(response.getStatus(), expectedStatus);
         return response.getStatusText();

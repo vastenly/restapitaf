@@ -208,11 +208,9 @@ public class OrderTest extends BaseTest {
 
     @Title("orderCreate_quantity_failOnOutOfBoundary")
     @Test(priority = 499)
-    public void orderCreate_quantity_failOnOutOfBoundary() throws UnirestException, IOException {
-        Order order = getOrderWithValidData();
-        order.quantity = Integer.MAX_VALUE + 1;
-        Order responseOrder = PetStoreAPI.createOrder(order, 400);
-        assertEquals(responseOrder, null);
+    public void orderCreate_quantity_failOnOutOfBoundary() throws UnirestException {
+        String statusText = PetStoreAPI.createOrder(jsonString_quantity_outOfIntegerMax, 400);
+        assertEquals(statusText, "Bad Request");
     }
 
     @Title("orderCreate_quantity_fail_DefaultValue")

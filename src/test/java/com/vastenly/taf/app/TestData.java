@@ -60,4 +60,6 @@ public class TestData {
         Order order = new Order();
         return order;
     }
+
+    public static String jsonString_quantity_outOfIntegerMax = " {\"id\":1220,\"petId\":8768,\"quantity\":2147483648,\"shipDate\":\"2019-10-26T17:06:56.745Z\",\"status\":\"placed\",\"complete\":false\"";
 }
