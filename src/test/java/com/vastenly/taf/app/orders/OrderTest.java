@@ -162,6 +162,13 @@ public class OrderTest extends BaseTest {
         assertEquals(responseOrder, null);
     }
 
+    @Title("orderCreate_id_failOnOutOfBoundary")
+    @Test(priority = 499)
+    public void orderCreate_id_failOnOutOfBoundary() throws UnirestException {
+        String statusText = PetStoreAPI.createOrder(jsonString_id_outOfLongMax, 400);
+        assertEquals(statusText, "Bad Request");
+    }
+
     @Title("orderCreate_id_fail_ValueNull")
     @Test(priority = 499)
     public void orderCreate_id_fail_ValueNull() throws UnirestException, IOException {
@@ -183,6 +190,13 @@ public class OrderTest extends BaseTest {
         order.petId = Long.valueOf(0);
         Order responseOrder = PetStoreAPI.createOrder(order, 400);
         assertEquals(responseOrder, null);
+    }
+
+    @Title("orderCreate_petId_failOnOutOfBoundary")
+    @Test(priority = 499)
+    public void orderCreate_petId_failOnOutOfBoundary() throws UnirestException {
+        String statusText = PetStoreAPI.createOrder(jsonString_petId_outOfLongMax, 400);
+        assertEquals(statusText, "Bad Request");
     }
 
     @Title("orderCreate_petId_fail_ValueNull")
@@ -315,6 +329,5 @@ public class OrderTest extends BaseTest {
         Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrder_Complete_DefaultValue(), 400, JsonInclude.Include.NON_DEFAULT);
         assertEquals(responseOrder, null);
     }
-
 
 }

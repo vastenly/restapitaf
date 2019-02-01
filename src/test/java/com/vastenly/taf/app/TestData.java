@@ -10,10 +10,10 @@ public class TestData {
 
     public static Order getOrderWithValidData() {
         Order order = new Order();
-        order.id = Long.valueOf(777 + (int) (Math.random() * 1000));
-        order.petId = Long.valueOf(7777 + (int) (Math.random() * 1000));
-        order.quantity = 1 + (int) (Math.random() * 10);
-        order.shipDate = "2019-10-26T17:06:56.745Z";
+        order.id = getRandomIdValue();
+        order.petId = getRandomPetIdValue();
+        order.quantity = getRandomQuantityValue();
+        order.shipDate = getShipDateValue();
         order.status = OrderStatus.PLACED.status();
         order.complete = false;
         return order;
@@ -61,5 +61,30 @@ public class TestData {
         return order;
     }
 
-    public static String jsonString_quantity_outOfIntegerMax = " {\"id\":1220,\"petId\":8768,\"quantity\":2147483648,\"shipDate\":\"2019-10-26T17:06:56.745Z\",\"status\":\"placed\",\"complete\":false\"";
+    private static Long getRandomIdValue() {
+        return Long.valueOf(777 + (int) (Math.random() * 1000));
+    }
+
+    private static Long getRandomPetIdValue() {
+        return Long.valueOf(7777 + (int) (Math.random() * 1000));
+    }
+
+    private static int getRandomQuantityValue() {
+        return 1 + (int) (Math.random() * 10);
+    }
+
+    private static String getShipDateValue() {
+        return "2019-10-26T17:06:56.745Z";
+    }
+
+    private static String outOfIntegerMax = "2147483648";
+
+    public static String jsonString_quantity_outOfIntegerMax = " {\"id\":" + getRandomIdValue() + ",\"petId\":" + getRandomPetIdValue() + ",\"quantity\":" + outOfIntegerMax + ",\"shipDate\":\"2019-10-26T17:06:56.745Z\",\"status\":\"placed\",\"complete\":false\"";
+
+    private static String outOfLongMax = "9223372036854775808";
+
+    public static String jsonString_id_outOfLongMax = " {\"id\":" + outOfLongMax + ",\"petId\":" + getRandomPetIdValue() + ",\"quantity\":" + getRandomQuantityValue() + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
+
+    public static String jsonString_petId_outOfLongMax = " {\"id\":" + getRandomIdValue() + ",\"petId\":" + outOfLongMax + ",\"quantity\":" + getRandomQuantityValue() + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
+
 }
