@@ -7,28 +7,23 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.vastenly.taf.util.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 
+import static com.vastenly.taf.util.AllureLogger.log;
 import static org.testng.Assert.assertEquals;
 
 public class PetStoreAPI {
-
-    private static final Logger log = LoggerFactory.getLogger(PetStoreAPI.class);
 
     private static String host = "http://petstore.swagger.io";
 
     public static void checkAccessToTheHost() throws UnirestException {
         HttpResponse<String> response = RestClient.sendGetRequest(host);
         assertEquals(response.getStatus(), 200);
-        log.info("checkAccessToTheHost: " + response);
+        log("checkAccessToTheHost: " + host + " | " + response.getStatusText());
     }
 
-    public static String createOrder(int expectedStatus) throws UnirestException {
+    public static String createOrder(String jsonString, int expectedStatus) throws UnirestException {
         String pathName = host + "/v2" + "/store/order";
-        String jsonString = "{,}";
         HttpResponse<JsonNode> response = RestClient.sendPostRequest(pathName, "vastenly", jsonString);
         assertEquals(response.getStatus(), expectedStatus);
         return response.getStatusText();
@@ -37,38 +32,21 @@ public class PetStoreAPI {
     public static Order createOrder(Order order, int expectedStatus) throws UnirestException, IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(order);
-        order = getResponse(jsonString, expectedStatus);
+        order = getPostResponseOrder(jsonString, expectedStatus);
         return order;
     }
 
-    public static Order createOrderWithNoFields_NON_NULL(Order order, int expectedStatus) throws UnirestException, IOException {
+    public static Order createOrderWithNoFields(Order order, int expectedStatus, JsonInclude.Include option) throws UnirestException, IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(option);
         String jsonString = objectMapper.writeValueAsString(order);
-        order = getResponse(jsonString, expectedStatus);
+        order = getPostResponseOrder(jsonString, expectedStatus);
         return order;
     }
 
-    public static Order createOrderWithNoFields_NON_DEFAULT(Order order, int expectedStatus) throws UnirestException, IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
-        String jsonString = objectMapper.writeValueAsString(order);
-        order = getResponse(jsonString, expectedStatus);
-        return order;
-    }
-
-    public static Order createOrderWithNoFields(Order order, int expectedStatus) throws UnirestException, IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL.NON_DEFAULT);
-        //objectMapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
-        String jsonString = objectMapper.writeValueAsString(order);
-        order = getResponse(jsonString, expectedStatus);
-        return order;
-    }
-
-    public static Order getResponse(String jsonString, int expectedStatus) throws UnirestException, IOException {
+    public static Order getPostResponseOrder(String jsonString, int expectedStatus) throws UnirestException, IOException {
         String pathName = host + "/v2" + "/store/order";
-        log.info("jsonString " + jsonString);
+        log("jsonString " + jsonString);
         HttpResponse<JsonNode> response = RestClient.sendPostRequest(pathName, "vastenly", jsonString);
         assertEquals(response.getStatus(), expectedStatus);
         ObjectMapper objectMapper = new ObjectMapper();

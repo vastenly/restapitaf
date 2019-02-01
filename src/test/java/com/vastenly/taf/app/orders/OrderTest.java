@@ -1,12 +1,11 @@
 package com.vastenly.taf.app.orders;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.vastenly.taf.BaseTest;
 import com.vastenly.taf.app.Order;
 import com.vastenly.taf.app.enums.OrderStatus;
 import com.vastenly.taf.app.PetStoreAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.allure.annotations.Description;
@@ -22,8 +21,6 @@ import static org.testng.Assert.*;
 @Description("Order Test")
 public class OrderTest extends BaseTest {
 
-    private final Logger log = LoggerFactory.getLogger(OrderTest.class);
-
     @DataProvider(name = "data")
     public Object[][] data() {
         return new Object[][]{
@@ -31,6 +28,7 @@ public class OrderTest extends BaseTest {
                 {444, 4444, 4, "2019-01-28T17:06:56.745Z", OrderStatus.PLACED.status(), false},
         };
     }
+
 
     @Title("orderCreate_ValidData")
     @Test(dataProvider = "data", priority = 1)
@@ -113,8 +111,8 @@ public class OrderTest extends BaseTest {
     }
 
 
-    //--------------------------------
-    //negative
+    //-----------------------------------------------------------------
+    //Negative tests
     //
     @Title("orderCreate_failOnDuplicate")
     @Test(priority = 499)
@@ -128,7 +126,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_fail_NoFields")
     @Test(priority = 499)
     public void orderCreate_fail_NoFields() throws UnirestException, IOException {
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrderWithNoFields(), 400);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrderWithNoFields(), 400, JsonInclude.Include.NON_NULL.NON_DEFAULT);
         assertEquals(responseOrder, null);
     }
 
@@ -144,14 +142,14 @@ public class OrderTest extends BaseTest {
     @Test(priority = 499)
     public void orderCreate_failOnNull() throws UnirestException, IOException {
         Order order = null;
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields_NON_DEFAULT(order, 500);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(order, 500, JsonInclude.Include.NON_DEFAULT);
         assertEquals(responseOrder, null);
     }
 
     @Title("orderCreate_failOnEmptyObjectWithComma")
     @Test(priority = 499)
     public void orderCreate_failOnEmptyObjectWithComma() throws UnirestException, IOException {
-        String statusText = PetStoreAPI.createOrder(400);
+        String statusText = PetStoreAPI.createOrder("{,}", 400);
         assertEquals(statusText, "Bad Request");
     }
 
@@ -174,7 +172,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_id_fail_NoField")
     @Test(priority = 499)
     public void orderCreate_id_fail_NoField() throws UnirestException, IOException {
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields_NON_NULL(getOrder_Id_NoValue(), 400);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrder_Id_NoValue(), 400, JsonInclude.Include.NON_NULL);
         assertEquals(responseOrder, null);
     }
 
@@ -197,7 +195,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_petId_fail_NoField")
     @Test(priority = 499)
     public void orderCreate_petId_fail_NoField() throws UnirestException, IOException {
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields_NON_NULL(getOrder_PetId_NoValue(), 400);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrder_PetId_NoValue(), 400, JsonInclude.Include.NON_NULL);
         assertEquals(responseOrder, null);
     }
 
@@ -227,7 +225,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_quantity_fail_NoField")
     @Test(priority = 499)
     public void orderCreate_quantity_fail_NoField() throws UnirestException, IOException {
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields_NON_DEFAULT(getOrder_Quantity_DefaultValue(), 400);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrder_Quantity_DefaultValue(), 400, JsonInclude.Include.NON_DEFAULT);
         assertEquals(responseOrder, null);
     }
 
@@ -259,7 +257,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_shipDate_fail_NoField")
     @Test(priority = 499)
     public void orderCreate_shipDate_fail_NoField() throws UnirestException, IOException {
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields_NON_NULL(getOrder_ShipDate_NoValue(), 400);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrder_ShipDate_NoValue(), 400, JsonInclude.Include.NON_NULL);
         assertEquals(responseOrder, null);
     }
 
@@ -300,7 +298,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_status_fail_NoField")
     @Test(priority = 499)
     public void orderCreate_status_fail_NoField() throws UnirestException, IOException {
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields_NON_NULL(getOrder_Status_NoValue(), 400);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrder_Status_NoValue(), 400, JsonInclude.Include.NON_NULL);
         assertEquals(responseOrder, null);
     }
 
@@ -316,7 +314,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_complete_fail_NoField")
     @Test(priority = 499)
     public void orderCreate_complete_fail_NoField() throws UnirestException, IOException {
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields_NON_DEFAULT(getOrder_Complete_DefaultValue(), 400);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(getOrder_Complete_DefaultValue(), 400, JsonInclude.Include.NON_DEFAULT);
         assertEquals(responseOrder, null);
     }
 
