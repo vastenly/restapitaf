@@ -3,8 +3,7 @@ package com.vastenly.taf.app;
 import com.vastenly.taf.app.enums.OrderStatus;
 import com.vastenly.taf.util.RandomUtils;
 
-import static com.vastenly.taf.util.RandomUtils.getRandomInt;
-import static com.vastenly.taf.util.RandomUtils.getRandomLong;
+import static com.vastenly.taf.util.RandomUtils.*;
 
 
 /**
@@ -78,7 +77,7 @@ public class TestData {
 
     public static String jsonString_petId_outOfLongMax = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + outOfLongMax + ",\"quantity\":" + getRandomInt(1, Integer.MAX_VALUE) + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
 
-    public static String jsonString_status_specialSymbol = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"quantity\":" + getRandomInt(1, Integer.MAX_VALUE) + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"" + RandomUtils.RandomSymbolType.SPECIAL.getValue() + "\",\"complete\":false\"";
+    public static String jsonString_status_specialSymbol = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"quantity\":" + getRandomInt(1, Integer.MAX_VALUE) + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"" + getRandomStringBy(RandomUtils.RandomSymbolType.SPECIAL, 10) + "\",\"complete\":false\"";
 
-    public static String jsonString_quantity_specialSymbol = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"quantity\":" + RandomUtils.RandomSymbolType.SPECIAL.getValue() + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
+    public static String jsonString_quantity_specialSymbol = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"quantity\":" + getRandomStringBy(RandomUtils.RandomSymbolType.SPECIAL, 10) + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
 }
