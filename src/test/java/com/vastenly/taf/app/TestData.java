@@ -1,6 +1,10 @@
 package com.vastenly.taf.app;
 
 import com.vastenly.taf.app.enums.OrderStatus;
+import com.vastenly.taf.util.RandomUtils;
+
+import static com.vastenly.taf.util.RandomUtils.getRandomInt;
+import static com.vastenly.taf.util.RandomUtils.getRandomLong;
 
 
 /**
@@ -10,9 +14,9 @@ public class TestData {
 
     public static Order getOrderWithValidData() {
         Order order = new Order();
-        order.id = getRandomIdValue();
-        order.petId = getRandomPetIdValue();
-        order.quantity = getRandomQuantityValue();
+        order.id = getRandomLong(1L, Long.MAX_VALUE);
+        order.petId = getRandomLong(1L, Long.MAX_VALUE);
+        order.quantity = getRandomInt(1, Integer.MAX_VALUE);
         order.shipDate = getShipDateValue();
         order.status = OrderStatus.PLACED.status();
         order.complete = false;
@@ -57,20 +61,7 @@ public class TestData {
     }
 
     public static Order getOrderWithNoFields() {
-        Order order = new Order();
-        return order;
-    }
-
-    private static Long getRandomIdValue() {
-        return Long.valueOf(777 + (int) (Math.random() * 1000));
-    }
-
-    private static Long getRandomPetIdValue() {
-        return Long.valueOf(7777 + (int) (Math.random() * 1000));
-    }
-
-    private static int getRandomQuantityValue() {
-        return 1 + (int) (Math.random() * 10);
+        return new Order();
     }
 
     private static String getShipDateValue() {
@@ -79,12 +70,15 @@ public class TestData {
 
     private static String outOfIntegerMax = "2147483648";
 
-    public static String jsonString_quantity_outOfIntegerMax = " {\"id\":" + getRandomIdValue() + ",\"petId\":" + getRandomPetIdValue() + ",\"quantity\":" + outOfIntegerMax + ",\"shipDate\":\"2019-10-26T17:06:56.745Z\",\"status\":\"placed\",\"complete\":false\"";
+    public static String jsonString_quantity_outOfIntegerMax = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"quantity\":" + outOfIntegerMax + ",\"shipDate\":\"2019-10-26T17:06:56.745Z\",\"status\":\"placed\",\"complete\":false\"";
 
     private static String outOfLongMax = "9223372036854775808";
 
-    public static String jsonString_id_outOfLongMax = " {\"id\":" + outOfLongMax + ",\"petId\":" + getRandomPetIdValue() + ",\"quantity\":" + getRandomQuantityValue() + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
+    public static String jsonString_id_outOfLongMax = " {\"id\":" + outOfLongMax + ",\"petId\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"quantity\":" + getRandomInt(1, Integer.MAX_VALUE) + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
 
-    public static String jsonString_petId_outOfLongMax = " {\"id\":" + getRandomIdValue() + ",\"petId\":" + outOfLongMax + ",\"quantity\":" + getRandomQuantityValue() + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
+    public static String jsonString_petId_outOfLongMax = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + outOfLongMax + ",\"quantity\":" + getRandomInt(1, Integer.MAX_VALUE) + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
 
+    public static String jsonString_status_specialSymbol = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"quantity\":" + getRandomInt(1, Integer.MAX_VALUE) + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"" + RandomUtils.RandomSymbolType.SPECIAL.getValue() + "\",\"complete\":false\"";
+
+    public static String jsonString_quantity_specialSymbol = " {\"id\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"petId\":" + getRandomLong(1L, Long.MAX_VALUE) + ",\"quantity\":" + RandomUtils.RandomSymbolType.SPECIAL.getValue() + ",\"shipDate\":\"" + getShipDateValue() + "\",\"status\":\"placed\",\"complete\":false\"";
 }

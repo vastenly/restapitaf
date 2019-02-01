@@ -9,6 +9,7 @@ import com.vastenly.taf.app.PetStoreAPI;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.allure.annotations.Description;
+import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.allure.annotations.Title;
 
 import java.io.IOException;
@@ -163,6 +164,7 @@ public class OrderTest extends BaseTest {
     }
 
     @Title("orderCreate_id_failOnOutOfBoundary")
+    @Step
     @Test(priority = 499)
     public void orderCreate_id_failOnOutOfBoundary() throws UnirestException {
         String statusText = PetStoreAPI.createOrder(jsonString_id_outOfLongMax, 400);
@@ -193,6 +195,7 @@ public class OrderTest extends BaseTest {
     }
 
     @Title("orderCreate_petId_failOnOutOfBoundary")
+    @Step
     @Test(priority = 499)
     public void orderCreate_petId_failOnOutOfBoundary() throws UnirestException {
         String statusText = PetStoreAPI.createOrder(jsonString_petId_outOfLongMax, 400);
@@ -221,6 +224,7 @@ public class OrderTest extends BaseTest {
     }
 
     @Title("orderCreate_quantity_failOnOutOfBoundary")
+    @Step
     @Test(priority = 499)
     public void orderCreate_quantity_failOnOutOfBoundary() throws UnirestException {
         String statusText = PetStoreAPI.createOrder(jsonString_quantity_outOfIntegerMax, 400);
@@ -232,6 +236,14 @@ public class OrderTest extends BaseTest {
     public void orderCreate_quantity_fail_DefaultValue() throws UnirestException, IOException {
         Order responseOrder = PetStoreAPI.createOrder(getOrder_Quantity_DefaultValue(), 400);
         assertEquals(responseOrder, null);
+    }
+
+    @Title("orderCreate_quantity_fail_ValueSpecialSymbol")
+    @Step
+    @Test(priority = 499)
+    public void orderCreate_quantity_fail_ValueSpecialSymbol() throws UnirestException {
+        String statusText = PetStoreAPI.createOrder(jsonString_quantity_specialSymbol, 400);
+        assertEquals(statusText, "Bad Request");
     }
 
     @Title("orderCreate_quantity_fail_NoField")
@@ -305,6 +317,14 @@ public class OrderTest extends BaseTest {
     public void orderCreate_status_fail_ValueNull() throws UnirestException, IOException {
         Order responseOrder = PetStoreAPI.createOrder(getOrder_Status_NoValue(), 400);
         assertEquals(responseOrder, null);
+    }
+
+    @Title("orderCreate_status_fail_ValueSpecialSymbol")
+    @Step
+    @Test(priority = 499)
+    public void orderCreate_status_fail_ValueSpecialSymbol() throws UnirestException {
+        String statusText = PetStoreAPI.createOrder(jsonString_status_specialSymbol, 400);
+        assertEquals(statusText, "Bad Request");
     }
 
     @Title("orderCreate_status_fail_NoField")

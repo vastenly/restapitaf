@@ -1,15 +1,15 @@
 package com.vastenly.taf;
 
-import com.vastenly.taf.system.AnnotationTransformer;
-import com.vastenly.taf.system.TestRetry;
+
 import com.vastenly.taf.app.PetStoreAPI;
+import com.vastenly.taf.system.ResultsListenerAdapter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
-import static com.vastenly.taf.util.AllureLogger.log;
+import static com.vastenly.taf.system.AllureLogger.log;
 
-@Listeners({/*WebDriverListener.class,*/ TestRetry.class, AnnotationTransformer.class})
+@Listeners({/*WebDriverListener.class,*/ ResultsListenerAdapter.class})
 public class BaseTest {
 
     @BeforeSuite
@@ -23,7 +23,7 @@ public class BaseTest {
         }
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(groups = "positive", alwaysRun = true)
     public void afterMethod() {
 
     }

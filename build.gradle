@@ -41,17 +41,21 @@ sourceCompatibility = 1.8
 
 dependencies {
     compile 'org.testng:testng:6.10'
-    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
-    compile 'ru.yandex.qatools.allure:allure-bundle:+'
-    compile 'ru.yandex.qatools.allure:allure-java-annotations:+'
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
     compile 'com.codeborne:selenide:4.11.4'
+
     compile group: 'org.sql2o', name: 'sql2o', version: '1.5.4'
-    compile group: 'javax.mail', name: 'mail', version: '1.4'
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1212'
+
+    compile group: 'javax.mail', name: 'mail', version: '1.4'
+
+    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
     compile 'org.projectlombok:lombok:1.18.4'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8'
-    testCompile "ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4"
+
+    compile 'ru.yandex.qatools.allure:allure-bundle:+'
+    compile 'ru.yandex.qatools.allure:allure-java-adaptor-api:+'
+    compile 'ru.yandex.qatools.allure:allure-java-annotations:+'
+    testCompile "ru.yandex.qatools.allure:allure-testng-adaptor:+"
 }
 
 task chromeLocalTest(type: Test) {

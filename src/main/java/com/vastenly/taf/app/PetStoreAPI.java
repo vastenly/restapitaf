@@ -9,7 +9,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.vastenly.taf.util.http.RestClient;
 import java.io.IOException;
 
-import static com.vastenly.taf.util.AllureLogger.log;
+import static com.vastenly.taf.system.AllureLogger.log;
 import static org.testng.Assert.assertEquals;
 
 public class PetStoreAPI {
