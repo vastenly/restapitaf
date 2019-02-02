@@ -9,11 +9,11 @@ import com.vastenly.taf.app.PetStoreAPI;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.allure.annotations.Description;
-import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.allure.annotations.Title;
 
 import java.io.IOException;
 
+import static com.vastenly.taf.app.AppConstants.*;
 import static com.vastenly.taf.app.TestData.*;
 import static com.vastenly.taf.app.TestData.getOrderWithNoFields;
 import static org.testng.Assert.*;
@@ -43,7 +43,7 @@ public class OrderTest extends BaseTest {
     @Test(priority = 1)
     public void orderCreate_id_minimumValue() throws UnirestException, IOException {
         Order order = getOrderWithValidData();
-        order.id = Long.valueOf("1");
+        order.id = 1L;
         Order responseOrder = PetStoreAPI.createOrder(order, 200);
         assertEquals(responseOrder, order);
     }
@@ -61,7 +61,7 @@ public class OrderTest extends BaseTest {
     @Test(priority = 1)
     public void orderCreate_petId_minimumValue() throws UnirestException, IOException {
         Order order = getOrderWithValidData();
-        order.petId = Long.valueOf("1");
+        order.petId = 1L;
         Order responseOrder = PetStoreAPI.createOrder(order, 200);
         assertEquals(responseOrder, order);
     }
@@ -96,8 +96,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_shipDate_currentDate")
     @Test(priority = 1)
     public void orderCreate_shipDate_currentDate() throws UnirestException, IOException {
-        Order order = getOrderWithValidData();
-        order.shipDate = "2019-01-26T17:06:56.745Z";
+        Order order = getOrder_ShipDate_DaysToIncrement(0);
         Order responseOrder = PetStoreAPI.createOrder(order, 200);
         assertEquals(responseOrder, order);
     }
@@ -105,8 +104,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_shipDate_futureDate")
     @Test(priority = 1)
     public void orderCreate_shipDate_futureDate() throws UnirestException, IOException {
-        Order order = getOrderWithValidData();
-        order.shipDate = "2030-01-26T17:06:56.745Z";
+        Order order = getOrder_ShipDate_DaysToIncrement(1);
         Order responseOrder = PetStoreAPI.createOrder(order, 200);
         assertEquals(responseOrder, order);
     }
@@ -142,33 +140,38 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_failOnNull")
     @Test(priority = 499)
     public void orderCreate_failOnNull() throws UnirestException, IOException {
-        Order order = null;
-        Order responseOrder = PetStoreAPI.createOrderWithNoFields(order, 500, JsonInclude.Include.NON_DEFAULT);
+        Order responseOrder = PetStoreAPI.createOrderWithNoFields(null, 500, JsonInclude.Include.NON_DEFAULT);
         assertEquals(responseOrder, null);
     }
 
     @Title("orderCreate_failOnEmptyObjectWithComma")
     @Test(priority = 499)
-    public void orderCreate_failOnEmptyObjectWithComma() throws UnirestException, IOException {
+    public void orderCreate_failOnEmptyObjectWithComma() throws UnirestException {
         String statusText = PetStoreAPI.createOrder("{,}", 400);
-        assertEquals(statusText, "Bad Request");
+        assertEquals(statusText, ERROR_BAD_REQUEST);
     }
 
     @Title("orderCreate_id_failOnZero")
     @Test(priority = 499)
     public void orderCreate_id_failOnZero() throws UnirestException, IOException {
         Order order = getOrderWithValidData();
-        order.id = Long.valueOf(0);
+        order.id = 0L;
         Order responseOrder = PetStoreAPI.createOrder(order, 400);
         assertEquals(responseOrder, null);
     }
 
     @Title("orderCreate_id_failOnOutOfBoundary")
-    @Step
     @Test(priority = 499)
     public void orderCreate_id_failOnOutOfBoundary() throws UnirestException {
         String statusText = PetStoreAPI.createOrder(jsonString_id_outOfLongMax, 400);
-        assertEquals(statusText, "Bad Request");
+        assertEquals(statusText, ERROR_BAD_REQUEST);
+    }
+
+    @Title("orderCreate_id_fail_NegativeNumber")
+    @Test(priority = 499)
+    public void orderCreate_id_fail_NegativeNumber() throws UnirestException, IOException {
+        Order responseOrder = PetStoreAPI.createOrder(getOrder_Id_NegativeNumber(), 400);
+        assertEquals(responseOrder, null);
     }
 
     @Title("orderCreate_id_fail_ValueNull")
@@ -189,17 +192,23 @@ public class OrderTest extends BaseTest {
     @Test(priority = 499)
     public void orderCreate_petId_failOnZero() throws UnirestException, IOException {
         Order order = getOrderWithValidData();
-        order.petId = Long.valueOf(0);
+        order.petId = 0L;
         Order responseOrder = PetStoreAPI.createOrder(order, 400);
         assertEquals(responseOrder, null);
     }
 
     @Title("orderCreate_petId_failOnOutOfBoundary")
-    @Step
     @Test(priority = 499)
     public void orderCreate_petId_failOnOutOfBoundary() throws UnirestException {
         String statusText = PetStoreAPI.createOrder(jsonString_petId_outOfLongMax, 400);
-        assertEquals(statusText, "Bad Request");
+        assertEquals(statusText, ERROR_BAD_REQUEST);
+    }
+
+    @Title("orderCreate_petId_fail_NegativeNumber")
+    @Test(priority = 499)
+    public void orderCreate_petId_fail_NegativeNumber() throws UnirestException, IOException {
+        Order responseOrder = PetStoreAPI.createOrder(getOrder_PetId_NegativeNumber(), 400);
+        assertEquals(responseOrder, null);
     }
 
     @Title("orderCreate_petId_fail_ValueNull")
@@ -224,26 +233,24 @@ public class OrderTest extends BaseTest {
     }
 
     @Title("orderCreate_quantity_failOnOutOfBoundary")
-    @Step
     @Test(priority = 499)
     public void orderCreate_quantity_failOnOutOfBoundary() throws UnirestException {
         String statusText = PetStoreAPI.createOrder(jsonString_quantity_outOfIntegerMax, 400);
-        assertEquals(statusText, "Bad Request");
+        assertEquals(statusText, ERROR_BAD_REQUEST);
     }
 
-    @Title("orderCreate_quantity_fail_DefaultValue")
+    @Title("orderCreate_quantity_fail_NegativeNumber")
     @Test(priority = 499)
-    public void orderCreate_quantity_fail_DefaultValue() throws UnirestException, IOException {
-        Order responseOrder = PetStoreAPI.createOrder(getOrder_Quantity_DefaultValue(), 400);
+    public void orderCreate_quantity_fail_NegativeNumber() throws UnirestException, IOException {
+        Order responseOrder = PetStoreAPI.createOrder(getOrder_Quantity_NegativeNumber(), 400);
         assertEquals(responseOrder, null);
     }
 
     @Title("orderCreate_quantity_fail_ValueSpecialSymbol")
-    @Step
     @Test(priority = 499)
     public void orderCreate_quantity_fail_ValueSpecialSymbol() throws UnirestException {
         String statusText = PetStoreAPI.createOrder(jsonString_quantity_specialSymbol, 400);
-        assertEquals(statusText, "Bad Request");
+        assertEquals(statusText, ERROR_BAD_REQUEST);
     }
 
     @Title("orderCreate_quantity_fail_NoField")
@@ -256,9 +263,7 @@ public class OrderTest extends BaseTest {
     @Title("orderCreate_shipDate_failOnPastDate")
     @Test(priority = 499)
     public void orderCreate_shipDate_failOnPastDate() throws UnirestException, IOException {
-        Order order = getOrderWithValidData();
-        order.shipDate = "2019-01-28T17:06:56.745Z";
-        Order responseOrder = PetStoreAPI.createOrder(order, 400);
+        Order responseOrder = PetStoreAPI.createOrder(getOrder_ShipDate_DaysToIncrement(-1), 400);
         assertEquals(responseOrder, null);
     }
 
@@ -271,11 +276,25 @@ public class OrderTest extends BaseTest {
         assertEquals(responseOrder, null);
     }
 
+    @Title("orderCreate_shipDate_fail_SpaceValue")
+    @Test(priority = 499)
+    public void orderCreate_shipDate_fail_SpaceValue() throws UnirestException, IOException {
+        Order responseOrder = PetStoreAPI.createOrder(getOrder_ShipDate_SpaceValue(), 400);
+        assertEquals(responseOrder, null);
+    }
+
     @Title("orderCreate_shipDate_fail_ValueNull")
     @Test(priority = 499)
     public void orderCreate_shipDate_fail_ValueNull() throws UnirestException, IOException {
         Order responseOrder = PetStoreAPI.createOrder(getOrder_ShipDate_NoValue(), 400);
         assertEquals(responseOrder, null);
+    }
+
+    @Title("orderCreate_shipDate_fail_ValueSpecialSymbol")
+    @Test(priority = 499)
+    public void orderCreate_shipDate_fail_ValueSpecialSymbol() throws UnirestException {
+        String statusText = PetStoreAPI.createOrder(jsonString_shipDate_specialSymbol, 400);
+        assertEquals(statusText, ERROR_BAD_REQUEST);
     }
 
     @Title("orderCreate_shipDate_fail_NoField")
@@ -312,6 +331,13 @@ public class OrderTest extends BaseTest {
         assertEquals(responseOrder, null);
     }
 
+    @Title("orderCreate_status_fail_SpaceValue")
+    @Test(priority = 499)
+    public void orderCreate_status_fail_SpaceValue() throws UnirestException, IOException {
+        Order responseOrder = PetStoreAPI.createOrder(getOrder_Status_SpaceValue(), 400);
+        assertEquals(responseOrder, null);
+    }
+
     @Title("orderCreate_status_fail_ValueNull")
     @Test(priority = 499)
     public void orderCreate_status_fail_ValueNull() throws UnirestException, IOException {
@@ -320,11 +346,10 @@ public class OrderTest extends BaseTest {
     }
 
     @Title("orderCreate_status_fail_ValueSpecialSymbol")
-    @Step
     @Test(priority = 499)
     public void orderCreate_status_fail_ValueSpecialSymbol() throws UnirestException {
         String statusText = PetStoreAPI.createOrder(jsonString_status_specialSymbol, 400);
-        assertEquals(statusText, "Bad Request");
+        assertEquals(statusText, ERROR_BAD_REQUEST);
     }
 
     @Title("orderCreate_status_fail_NoField")

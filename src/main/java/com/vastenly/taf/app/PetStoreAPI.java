@@ -9,23 +9,23 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.vastenly.taf.util.http.RestClient;
 import java.io.IOException;
 
+import static com.vastenly.taf.app.AppConstants.*;
 import static com.vastenly.taf.system.AllureLogger.log;
 import static org.testng.Assert.assertEquals;
 
 public class PetStoreAPI {
 
-    private static String host = "http://petstore.swagger.io";
+    private static String postRequestURL_STORE_ORDER = PET_STORE_SERVER_URL + "/v2" + STORE_ORDER_URI;
 
     public static void checkAccessToTheHost() throws UnirestException {
-        HttpResponse<String> response = RestClient.sendGetRequest(host);
+        HttpResponse<String> response = RestClient.sendGetRequest(PET_STORE_SERVER_URL);
         assertEquals(response.getStatus(), 200);
-        log("checkAccessToTheHost: " + host + " | " + response.getStatusText());
+        log("checkAccessToTheHost: " + PET_STORE_SERVER_URL + " | " + response.getStatusText());
     }
 
     public static String createOrder(String jsonString, int expectedStatus) throws UnirestException {
-        String pathName = host + "/v2" + "/store/order";
-        log("jsonString " + jsonString);
-        HttpResponse<JsonNode> response = RestClient.sendPostRequest(pathName, "vastenly", jsonString);
+        log(jsonString);
+        HttpResponse<JsonNode> response = RestClient.sendPostRequest(postRequestURL_STORE_ORDER, API_KEY, jsonString);
         assertEquals(response.getStatus(), expectedStatus);
         return response.getStatusText();
     }
@@ -46,9 +46,8 @@ public class PetStoreAPI {
     }
 
     public static Order getPostResponseOrder(String jsonString, int expectedStatus) throws UnirestException, IOException {
-        String pathName = host + "/v2" + "/store/order";
-        log("jsonString " + jsonString);
-        HttpResponse<JsonNode> response = RestClient.sendPostRequest(pathName, "vastenly", jsonString);
+        log(jsonString);
+        HttpResponse<JsonNode> response = RestClient.sendPostRequest(postRequestURL_STORE_ORDER, API_KEY, jsonString);
         assertEquals(response.getStatus(), expectedStatus);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
