@@ -1,22 +1,29 @@
 package com.vastenly.taf.system;
 
+import com.codeborne.selenide.Driver;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenidePageFactory;
+//import com.codeborne.selenide.SelenidePageFactory;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.impl.SelenideFieldDecorator;
+import com.codeborne.selenide.impl.SelenidePageFactory;
 import com.vastenly.taf.pages.BasePage;
 
 import java.lang.reflect.Constructor;
 import java.net.URL;
 
+
+//import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static org.openqa.selenium.support.PageFactory.initElements;
 
 public class SelenideWrapper extends Selenide {
 
     private static boolean checkFbq = false;
 
     public static <PageObjectClass, T extends PageObjectClass> PageObjectClass page(T pageObject) {
-        SelenidePageFactory.initElements(new SelenideFieldDecorator(getWebDriver()), pageObject);
+        SelenidePageFactory selenidePageFactory = new SelenidePageFactory ();
+        //SelenideFieldDecorator selenideFieldDecorator = new SelenideFieldDecorator(selenidePageFactory, getWebDriver(), getWebDriver());
+        //selenidePageFactory.initElements(selenideFieldDecorator, pageObject);
         ((BasePage) pageObject).checkPageContent();
         return pageObject;
     }

@@ -1,22 +1,22 @@
 package com.vastenly.taf.system;
 
-import ru.yandex.qatools.allure.events.TestSuiteEvent;
+/*import ru.yandex.qatools.allure.events.TestSuiteEvent;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestCaseResult;
-import ru.yandex.qatools.allure.model.TestSuiteResult;
+import ru.yandex.qatools.allure.model.TestSuiteResult;*/
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RemoveDuplicatesTestSuiteEvent implements TestSuiteEvent {
+public class RemoveDuplicatesTestSuiteEvent /*implements TestSuiteEvent*/ {
     private String uid;
 
     public RemoveDuplicatesTestSuiteEvent(String uid) {
         this.uid = uid;
     }
 
-    @Override
+    /*@Override
     public String getUid() {
         return uid;
     }
@@ -116,5 +116,5 @@ public class RemoveDuplicatesTestSuiteEvent implements TestSuiteEvent {
             }
         }
         return res;
-    }
+    }*/
 }

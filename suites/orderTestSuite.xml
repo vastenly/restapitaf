@@ -7,7 +7,7 @@
     <test name="Test">
         <groups>
             <dependencies>
-                <group name="time-setting" depends-on="non-time-setting"/>
+                <group name="restapi" depends-on="ui"/>
             </dependencies>
         </groups>
         <classes>

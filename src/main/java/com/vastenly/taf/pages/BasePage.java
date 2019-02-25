@@ -1,7 +1,8 @@
 package com.vastenly.taf.pages;
 
 import com.codeborne.selenide.WebDriverRunner;
-import ru.yandex.qatools.allure.annotations.Step;
+import io.qameta.allure.Step;
+//import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.testng.Assert.assertTrue;
 
