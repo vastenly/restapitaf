@@ -21,9 +21,8 @@ allure {
     version = '2.9.0'
     autoconfigure = true
     aspectjweaver = true
-
-    resultsDir = file('build/allure-results')
-    reportDir = file('build/allure-report')
+    resultsDir = new File(projectDir as File, '/allure-results')
+    reportDir = new File(projectDir as File, '/allure-report')
 }
 /*,
 allure {
