@@ -1,5 +1,5 @@
 # restapitaf
-REST api test automation framework
+REST api test automation framework with Unirest
 
 Local tests run: use testNG runner 
     or from console:
