@@ -23,7 +23,7 @@ public class BaseTest {
         }
     }
 
-    @AfterMethod(groups = "positive", alwaysRun = true)
+    @AfterMethod(groups = "restapi", alwaysRun = true)
     public void afterMethod() {
 
     }

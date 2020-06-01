@@ -2,11 +2,12 @@ package com.vastenly.taf.system;
 
 import com.codeborne.selenide.Screenshots;
 import com.codeborne.selenide.WebDriverRunner;
+import io.qameta.allure.Attachment;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.testng.*;
-import ru.yandex.qatools.allure.annotations.Attachment;
+//import ru.yandex.qatools.allure.annotations.Attachment;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +56,6 @@ public class WebDriverListener implements IInvokedMethodListener, ITestListener 
         }
         return result;
     }
-
     @Attachment(value = "DOM dump", type = "application/xml")
     private String makeDOMDumpOnFailure() {
         return source();

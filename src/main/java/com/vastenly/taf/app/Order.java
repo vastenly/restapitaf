@@ -6,7 +6,7 @@ import lombok.Data;
 import static org.testng.Assert.assertEquals;
 
 
-@Data
+//@Data
 public class Order {
 
     public Order() {

@@ -1,13 +1,14 @@
 # restapitaf
-REST api test automation framework
+REST api test automation framework with Unirest
 
 Local tests run: use testNG runner 
     or from console:
 
-    ./gradlew clean chromeLocalTest -PsuiteName=orderTestSuite allureReport
+    ./gradlew clean chromeLocalTest -PsuiteName=orderTestSuite
 
 
 
-View allure results (for macOS use FireFox browser):
+Get allure report:
     
-    restapitaf/build/allure-report/index.html
+    allure generate --clean && allure serve
+    
